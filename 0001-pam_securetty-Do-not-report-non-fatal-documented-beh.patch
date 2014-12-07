@@ -1,0 +1,25 @@
+From de8077959ba08e513ef40a48b2d4972a66a77bb0 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Wed, 24 Jun 2015 13:07:14 +0100
+Subject: [PATCH] pam_securetty: Do not report non-fatal, documented, behaviour
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ modules/pam_securetty/pam_securetty.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/modules/pam_securetty/pam_securetty.c b/modules/pam_securetty/pam_securetty.c
+index 0474130..cbdb08f 100644
+--- a/modules/pam_securetty/pam_securetty.c
++++ b/modules/pam_securetty/pam_securetty.c
+@@ -111,7 +111,6 @@ securetty_perform_check (pam_handle_t *pamh, int ctrl,
+     }
+ 
+     if (stat(SECURETTY_FILE, &ttyfileinfo)) {
+-	pam_syslog(pamh, LOG_NOTICE, "Couldn't open %s: %m", SECURETTY_FILE);
+ 	return PAM_SUCCESS; /* for compatibility with old securetty handling,
+ 			       this needs to succeed.  But we still log the
+ 			       error. */
+-- 
+1.9.1
+

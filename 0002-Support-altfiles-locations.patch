@@ -1,0 +1,82 @@
+From 85b70a3201a78826e0ebaf9b4d0bbc19c8811a38 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Mon, 2 Mar 2015 12:34:42 +0000
+Subject: [PATCH 2/3] Support altfiles locations.
+
+---
+ modules/pam_unix/passverify.c |  4 +++-
+ modules/pam_unix/support.c    | 31 ++++++++++++++++++-------------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
+
+diff --git a/modules/pam_unix/passverify.c b/modules/pam_unix/passverify.c
+index b325602..34750ff 100644
+--- a/modules/pam_unix/passverify.c
++++ b/modules/pam_unix/passverify.c
+@@ -875,6 +875,7 @@ PAMH_ARG_DECL(int unix_update_shadow,
+     struct spwd spwdent, *stmpent = NULL;
+     struct stat st;
+     FILE *pwfile, *opwfile;
++    int opwfd = -1;
+     int err = 0;
+     int oldmask;
+     int wroteentry = 0;
+@@ -909,7 +910,8 @@ PAMH_ARG_DECL(int unix_update_shadow,
+ 	goto done;
+     }
+ 
+-    opwfile = fopen("/etc/shadow", "r");
++    opwfd = open("/etc/shadow", O_RDONLY|O_CREAT|O_CLOEXEC, 0);
++    opwfile = fdopen(opwfd, "r");
+     if (opwfile == NULL) {
+ 	fclose(pwfile);
+ 	err = 1;
+diff --git a/modules/pam_unix/support.c b/modules/pam_unix/support.c
+index fdb45c2..7952580 100644
+--- a/modules/pam_unix/support.c
++++ b/modules/pam_unix/support.c
+@@ -381,24 +381,29 @@ int _unix_getpwnam(pam_handle_t *pamh, const char *name,
+ 	int matched = 0, buflen;
+ 	char *slogin, *spasswd, *suid, *sgid, *sgecos, *shome, *sshell, *p;
+ 
++	char *passwd_files[] = {"/etc/passwd", "/usr/share/defaults/etc/passwd", NULL};
++	char **i = NULL;
++
+ 	memset(buf, 0, sizeof(buf));
+ 
+-	if (!matched && files) {
+-		int userlen = strlen(name);
+-		passwd = fopen("/etc/passwd", "r");
+-		if (passwd != NULL) {
+-			while (fgets(buf, sizeof(buf), passwd) != NULL) {
+-				if ((buf[userlen] == ':') &&
+-				    (strncmp(name, buf, userlen) == 0)) {
+-					p = buf + strlen(buf) - 1;
+-					while (isspace(*p) && (p >= buf)) {
+-						*p-- = '\0';
++	for (i = passwd_files; i && *i; i++) {
++		if (!matched && files) {
++			int userlen = strlen(name);
++			passwd = fopen(*i, "r");
++			if (passwd != NULL) {
++				while (fgets(buf, sizeof(buf), passwd) != NULL) {
++					if ((buf[userlen] == ':') &&
++					    (strncmp(name, buf, userlen) == 0)) {
++						p = buf + strlen(buf) - 1;
++						while (isspace(*p) && (p >= buf)) {
++							*p-- = '\0';
++						}
++						matched = 1;
++						break;
+ 					}
+-					matched = 1;
+-					break;
+ 				}
++				fclose(passwd);
+ 			}
+-			fclose(passwd);
+ 		}
+ 	}
+ 
+-- 
+1.9.1
+
