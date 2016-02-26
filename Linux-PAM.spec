@@ -16,6 +16,7 @@ Patch0:         0001-libpam-Keep-existing-pamdir-for-transition.patch
 Patch1:         0002-Support-altfiles-locations.patch
 Patch2:         0003-pam_env-Only-report-non-ENOENT-errors-for-env-file.patch
 Patch3:         0001-pam_securetty-Do-not-report-non-fatal-documented-beh.patch
+Patch4:         0004-pam_shells-Support-a-stateless-configuration-by-defa.patch
 BuildRequires:  autoconf  automake automake-dev gettext gettext-dev libtool libtool-dev pkg-config-dev
 BuildRequires:  bison-dev
 BuildRequires:  cracklib-dev
@@ -55,6 +56,7 @@ Linux-PAM (Pluggable Authentication Modules).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export CFLAGS="$CFLAGS -Os -ffunction-sections"

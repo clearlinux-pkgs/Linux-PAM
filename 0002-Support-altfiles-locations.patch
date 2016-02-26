@@ -1,7 +1,7 @@
-From 85b70a3201a78826e0ebaf9b4d0bbc19c8811a38 Mon Sep 17 00:00:00 2001
+From aadb10701e5903dc0f81b718eebf93e79ffdb918 Mon Sep 17 00:00:00 2001
 From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
 Date: Mon, 2 Mar 2015 12:34:42 +0000
-Subject: [PATCH 2/3] Support altfiles locations.
+Subject: [PATCH 2/4] Support altfiles locations.
 
 ---
  modules/pam_unix/passverify.c |  4 +++-
@@ -9,7 +9,7 @@ Subject: [PATCH 2/3] Support altfiles locations.
  2 files changed, 21 insertions(+), 14 deletions(-)
 
 diff --git a/modules/pam_unix/passverify.c b/modules/pam_unix/passverify.c
-index b325602..34750ff 100644
+index e79b55e..a0e879b 100644
 --- a/modules/pam_unix/passverify.c
 +++ b/modules/pam_unix/passverify.c
 @@ -875,6 +875,7 @@ PAMH_ARG_DECL(int unix_update_shadow,
@@ -31,7 +31,7 @@ index b325602..34750ff 100644
  	fclose(pwfile);
  	err = 1;
 diff --git a/modules/pam_unix/support.c b/modules/pam_unix/support.c
-index fdb45c2..7952580 100644
+index abccd82..f3c9348 100644
 --- a/modules/pam_unix/support.c
 +++ b/modules/pam_unix/support.c
 @@ -381,24 +381,29 @@ int _unix_getpwnam(pam_handle_t *pamh, const char *name,
@@ -78,5 +78,5 @@ index fdb45c2..7952580 100644
  	}
  
 -- 
-1.9.1
+2.7.1
 

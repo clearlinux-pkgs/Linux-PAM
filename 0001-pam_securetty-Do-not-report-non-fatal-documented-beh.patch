@@ -1,7 +1,8 @@
-From de8077959ba08e513ef40a48b2d4972a66a77bb0 Mon Sep 17 00:00:00 2001
+From 03f1540234207618c749f17a5a3b8fe6f8b1b09b Mon Sep 17 00:00:00 2001
 From: Ikey Doherty <michael.i.doherty@intel.com>
 Date: Wed, 24 Jun 2015 13:07:14 +0100
-Subject: [PATCH] pam_securetty: Do not report non-fatal, documented, behaviour
+Subject: [PATCH 1/4] pam_securetty: Do not report non-fatal, documented,
+ behaviour
 
 Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
 ---
@@ -21,5 +22,5 @@ index 0474130..cbdb08f 100644
  			       this needs to succeed.  But we still log the
  			       error. */
 -- 
-1.9.1
+2.7.1
 
