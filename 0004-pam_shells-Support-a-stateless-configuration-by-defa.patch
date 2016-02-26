@@ -1,0 +1,69 @@
+From 762d8835abc60b3a15aa851a4fcd9c751227ef78 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Fri, 26 Feb 2016 22:17:35 +0000
+Subject: [PATCH 4/4] pam_shells: Support a stateless configuration by default
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ modules/pam_shells/pam_shells.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/modules/pam_shells/pam_shells.c b/modules/pam_shells/pam_shells.c
+index 68bd607..eeefecb 100644
+--- a/modules/pam_shells/pam_shells.c
++++ b/modules/pam_shells/pam_shells.c
+@@ -1,6 +1,7 @@
+ /* pam_shells module */
+ 
+-#define SHELL_FILE "/etc/shells"
++#define SHELL_FILE 		"/etc/shells"
++#define DEFAULT_SHELL_FILE	"/usr/share/defaults/etc/shells"
+ 
+ /*
+  * by Erik Troan <ewt@redhat.com>, Red Hat Software.
+@@ -43,6 +44,7 @@ static int perform_check(pam_handle_t *pamh)
+     struct stat sb;
+     struct passwd * pw;
+     FILE * shellFile;
++    const char *shellPath = NULL;
+ 
+     retval = pam_get_user(pamh, &userName, NULL);
+     if (retval != PAM_SUCCESS) {
+@@ -67,21 +69,27 @@ static int perform_check(pam_handle_t *pamh)
+     }
+     userShell = pw->pw_shell;
+ 
+-    if (stat(SHELL_FILE,&sb)) {
+-	pam_syslog(pamh, LOG_ERR, "Cannot stat %s: %m", SHELL_FILE);
+-	return PAM_AUTH_ERR;		/* must have /etc/shells */
+-    }
++	if (stat(SHELL_FILE, &sb) != 0) {
++		if (stat(DEFAULT_SHELL_FILE, &sb) != 0) {
++			pam_syslog(pamh, LOG_ERR, "Cannot stat %s: %m", DEFAULT_SHELL_FILE);
++			return PAM_AUTH_ERR;	/* Stateless shells file must exist */
++		}
++		shellPath = DEFAULT_SHELL_FILE;
++	} else {
++		/* System administrator has provided /etc/shells */
++		shellPath = SHELL_FILE;
++	}
+ 
+     if ((sb.st_mode & S_IWOTH) || !S_ISREG(sb.st_mode)) {
+ 	pam_syslog(pamh, LOG_ERR,
+ 		   "%s is either world writable or not a normal file",
+-		   SHELL_FILE);
++		   shellPath);
+ 	return PAM_AUTH_ERR;
+     }
+ 
+-    shellFile = fopen(SHELL_FILE,"r");
++    shellFile = fopen(shellPath, "r");
+     if (shellFile == NULL) {       /* Check that we opened it successfully */
+-	pam_syslog(pamh, LOG_ERR, "Error opening %s: %m", SHELL_FILE);
++	pam_syslog(pamh, LOG_ERR, "Error opening %s: %m", shellPath);
+ 	return PAM_SERVICE_ERR;
+     }
+ 
+-- 
+2.7.1
+
