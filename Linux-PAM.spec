@@ -22,6 +22,12 @@ BuildRequires:  bison-dev
 BuildRequires:  cracklib-dev
 BuildRequires:  flex-dev
 BuildRequires:  pkgconfig(zlib)
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
+
 # FIXME: should name the base package "pam" instead, and provide libpam
 Provides:       pam
 
@@ -34,6 +40,23 @@ Group:          devel
 Requires:       %{name} = %{version}-%{release}
 
 %description dev
+Linux-PAM (Pluggable Authentication Modules).
+
+%package dev32
+Summary:        Linux-PAM (Pluggable Authentication Modules)
+Group:          devel
+Requires:       %{name} = %{version}-%{release}
+Requires:       Linux-PAM-lib32
+
+%description dev32
+Linux-PAM (Pluggable Authentication Modules).
+
+%package lib32
+Summary:        Linux-PAM (Pluggable Authentication Modules)
+Group:          devel
+Requires:       %{name} = %{version}-%{release}
+
+%description lib32
 Linux-PAM (Pluggable Authentication Modules).
 
 %package doc
@@ -58,6 +81,11 @@ Linux-PAM (Pluggable Authentication Modules).
 %patch3 -p1
 %patch4 -p1
 
+pushd ..
+cp -a Linux-PAM-%{version} build32
+popd
+
+
 %build
 export CFLAGS="$CFLAGS -Os -ffunction-sections"
 
@@ -75,7 +103,37 @@ autoreconf -fi
 
 make %{?_smp_mflags}
 
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+autoreconf -fi
+%configure \
+ --with-db-uniquename=_pam \
+ --includedir=/usr/include/security \
+ --libdir=/usr/lib32 \
+ --disable-nis \
+ --disable-regenerate-docu \
+ --disable-prelude \
+ --enable-nls \
+ --disable-audit \
+ --sysconfdir=%{_datadir}
+
+make %{?_smp_mflags}
+
+popd
+
+
 %install
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do mv $i 32$i ; done
+popd
+fi
+popd
+
 %make_install
 
 rm -f %{buildroot}%{_datadir}/environment
@@ -127,6 +185,20 @@ echo "session optional pam_systemd.so" >> %{buildroot}%{_datadir}/pam.d/common-s
 %{_libdir}/libpamc.so
 %{_libdir}/libpam.so
 %{_libdir}/libpam.so.0
+
+%files dev32
+%{_includedir}/security/*.h
+/usr/lib32/libpam_misc.so
+/usr/lib32/libpamc.so
+/usr/lib32/libpam.so
+/usr/lib32/libpam.so.0
+
+%files lib32
+%exclude /usr/lib32/security
+/usr/lib32/libpam.so.*
+/usr/lib32/libpam_misc.so.*
+/usr/lib32/libpamc.so.*
+
 
 %files doc
 %{_mandir}/man3/*
