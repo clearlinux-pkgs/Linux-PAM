@@ -87,7 +87,10 @@ popd
 
 
 %build
-export CFLAGS="$CFLAGS -Os -ffunction-sections"
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition "
 
 autoreconf -fi
 %configure \
