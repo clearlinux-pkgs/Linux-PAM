@@ -96,13 +96,13 @@ autoreconf -fi
 %configure \
  --with-db-uniquename=_pam \
  --includedir=/usr/include/security \
- --libdir=%{_libdir} \
+ --libdir=/usr/lib64 \
  --disable-nis \
  --disable-regenerate-docu \
  --disable-prelude \
  --enable-nls \
  --disable-audit \
- --sysconfdir=%{_datadir}
+ --sysconfdir=/usr/share
 
 make %{?_smp_mflags}
 
@@ -119,7 +119,7 @@ autoreconf -fi
  --disable-prelude \
  --enable-nls \
  --disable-audit \
- --sysconfdir=%{_datadir}
+ --sysconfdir=/usr/share
 
 make %{?_smp_mflags}
 
@@ -139,58 +139,58 @@ popd
 
 %make_install
 
-rm -f %{buildroot}%{_datadir}/environment
+rm -f %{buildroot}/usr/share/environment
 
-install -d %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE2} %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE4} %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE5} %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE6} %{buildroot}%{_datadir}/pam.d/
-install -m 0644 %{SOURCE7} %{buildroot}%{_datadir}/pam.d/
+install -d %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE2} %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE3} %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE4} %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE5} %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE6} %{buildroot}/usr/share/pam.d/
+install -m 0644 %{SOURCE7} %{buildroot}/usr/share/pam.d/
 
 # The lsb requires unix_chkpwd has setuid permission
-chmod 4755 %{buildroot}%{_sbindir}/unix_chkpwd
+chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
-echo "session optional pam_systemd.so" >> %{buildroot}%{_datadir}/pam.d/common-session
+echo "session optional pam_systemd.so" >> %{buildroot}/usr/share/pam.d/common-session
 
 %find_lang Linux-PAM %{name}.lang
 
 %files
-%{_datadir}/pam.d/common-auth
-%{_datadir}/pam.d/common-session
-%{_datadir}/pam.d/common-password
-%{_datadir}/pam.d/other
-%{_datadir}/pam.d/common-session-noninteractive
-%{_datadir}/pam.d/common-account
-%{_datadir}/security/time.conf
-%{_datadir}/security/limits.conf
-%{_datadir}/security/access.conf
-%{_datadir}/security/pam_env.conf
-%{_datadir}/security/namespace.conf
-%{_datadir}/security/namespace.init
-%{_datadir}/security/group.conf
-%{_libdir}/libpam.so.*
-%{_libdir}/libpam_misc.so.*
-%{_libdir}/libpamc.so.*
-%{_libdir}/security/*.so
-%{_libdir}/security/pam_filter/upperLOWER
-%{_sbindir}/mkhomedir_helper
-%{_sbindir}/pam_tally
-%{_sbindir}/pam_tally2
-%{_sbindir}/pam_timestamp_check
-%{_sbindir}/unix_chkpwd
-%{_sbindir}/unix_update
+/usr/share/pam.d/common-auth
+/usr/share/pam.d/common-session
+/usr/share/pam.d/common-password
+/usr/share/pam.d/other
+/usr/share/pam.d/common-session-noninteractive
+/usr/share/pam.d/common-account
+/usr/share/security/time.conf
+/usr/share/security/limits.conf
+/usr/share/security/access.conf
+/usr/share/security/pam_env.conf
+/usr/share/security/namespace.conf
+/usr/share/security/namespace.init
+/usr/share/security/group.conf
+/usr/lib64/libpam.so.*
+/usr/lib64/libpam_misc.so.*
+/usr/lib64/libpamc.so.*
+/usr/lib64/security/*.so
+/usr/lib64/security/pam_filter/upperLOWER
+/usr/bin/mkhomedir_helper
+/usr/bin/pam_tally
+/usr/bin/pam_tally2
+/usr/bin/pam_timestamp_check
+/usr/bin/unix_chkpwd
+/usr/bin/unix_update
 
 %files dev
-%{_includedir}/security/*.h
-%{_libdir}/libpam_misc.so
-%{_libdir}/libpamc.so
-%{_libdir}/libpam.so
-%{_libdir}/libpam.so.0
+/usr/include/security/*.h
+/usr/lib64/libpam_misc.so
+/usr/lib64/libpamc.so
+/usr/lib64/libpam.so
+/usr/lib64/libpam.so.0
 
 %files dev32
-%{_includedir}/security/*.h
+/usr/include/security/*.h
 /usr/lib32/libpam_misc.so
 /usr/lib32/libpamc.so
 /usr/lib32/libpam.so
@@ -207,8 +207,8 @@ echo "session optional pam_systemd.so" >> %{buildroot}%{_datadir}/pam.d/common-s
 %{_mandir}/man3/*
 %{_mandir}/man5/*
 %{_mandir}/man8/*
-%{_datadir}/doc/Linux-PAM/draft-morgan-pam-current.txt
-%{_datadir}/doc/Linux-PAM/index.html
-%{_datadir}/doc/Linux-PAM/rfc86.0.txt
+/usr/share/doc/Linux-PAM/draft-morgan-pam-current.txt
+/usr/share/doc/Linux-PAM/index.html
+/usr/share/doc/Linux-PAM/rfc86.0.txt
 
 %files locale -f %{name}.lang
