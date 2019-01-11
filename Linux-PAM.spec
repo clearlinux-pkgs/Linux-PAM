@@ -1,6 +1,6 @@
 Name:           Linux-PAM
 Version:        1.3.0
-Release:        35
+Release:        36
 License:        GPL-2.0+ BSD-3-Clause
 Summary:        Linux-PAM (Pluggable Authentication Modules)
 Url:            https://fedorahosted.org/linux-pam/
