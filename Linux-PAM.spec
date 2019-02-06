@@ -1,11 +1,11 @@
 Name:           Linux-PAM
-Version:        1.3.0
-Release:        36
+Version:        1.3.1
+Release:        37
 License:        GPL-2.0+ BSD-3-Clause
 Summary:        Linux-PAM (Pluggable Authentication Modules)
-Url:            https://fedorahosted.org/linux-pam/
+Url:            http://linux-pam.org
 Group:          base
-Source0:        http://linux-pam.org/library/Linux-PAM-1.3.0.tar.bz2
+Source0:        https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source2:        common-account
 Source3:        common-auth
 Source4:        common-password
