@@ -37,7 +37,7 @@ Linux-PAM (Pluggable Authentication Modules).
 %package dev
 Summary:        Linux-PAM (Pluggable Authentication Modules)
 Group:          devel
-Requires:       %{name} = %{version}-%{release}
+Requires:       Linux-PAM = %{version}-%{release}
 
 %description dev
 Linux-PAM (Pluggable Authentication Modules).
@@ -45,7 +45,7 @@ Linux-PAM (Pluggable Authentication Modules).
 %package dev32
 Summary:        Linux-PAM (Pluggable Authentication Modules)
 Group:          devel
-Requires:       %{name} = %{version}-%{release}
+Requires:       Linux-PAM = %{version}-%{release}
 Requires:       Linux-PAM-lib32
 
 %description dev32
@@ -54,7 +54,7 @@ Linux-PAM (Pluggable Authentication Modules).
 %package lib32
 Summary:        Linux-PAM (Pluggable Authentication Modules)
 Group:          devel
-Requires:       %{name} = %{version}-%{release}
+Requires:       Linux-PAM = %{version}-%{release}
 
 %description lib32
 Linux-PAM (Pluggable Authentication Modules).
@@ -154,7 +154,7 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
 echo "session optional pam_systemd.so" >> %{buildroot}/usr/share/pam.d/common-session
 
-%find_lang Linux-PAM %{name}.lang
+%find_lang Linux-PAM Linux-PAM.lang
 
 %files
 /usr/share/pam.d/common-auth
@@ -204,11 +204,11 @@ echo "session optional pam_systemd.so" >> %{buildroot}/usr/share/pam.d/common-se
 
 
 %files doc
-%{_mandir}/man3/*
-%{_mandir}/man5/*
-%{_mandir}/man8/*
+/usr/share/man/man3/*
+/usr/share/man/man5/*
+/usr/share/man/man8/*
 /usr/share/doc/Linux-PAM/draft-morgan-pam-current.txt
 /usr/share/doc/Linux-PAM/index.html
 /usr/share/doc/Linux-PAM/rfc86.0.txt
 
-%files locale -f %{name}.lang
+%files locale -f Linux-PAM.lang
