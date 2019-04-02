@@ -1,6 +1,6 @@
 Name:           Linux-PAM
 Version:        1.3.1
-Release:        37
+Release:        38
 License:        GPL-2.0+ BSD-3-Clause
 Summary:        Linux-PAM (Pluggable Authentication Modules)
 Url:            http://linux-pam.org
@@ -152,7 +152,7 @@ install -m 0644 %{SOURCE7} %{buildroot}/usr/share/pam.d/
 # The lsb requires unix_chkpwd has setuid permission
 chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
-echo "session optional pam_systemd.so" >> %{buildroot}/usr/share/pam.d/common-session
+echo -e "session\toptional\t\t\tpam_systemd.so" >> %{buildroot}/usr/share/pam.d/common-session
 
 %find_lang Linux-PAM Linux-PAM.lang
 
