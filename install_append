@@ -1,0 +1,12 @@
+#cleanup
+rm -f %{buildroot}/usr/share/environment
+
+install -d %{buildroot}/usr/share/pam.d/
+for FILE in common-account common-auth common-password \
+	    common-session common-session-noninteractive \
+	    other; do
+	install -m 0644 $FILE %{buildroot}/usr/share/pam.d/
+done
+
+# The lsb requires unix_chkpwd has setuid permission
+chmod 4755 %{buildroot}/usr/bin/unix_chkpwd

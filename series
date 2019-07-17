@@ -1,0 +1,6 @@
+0001-libpam-Keep-existing-pamdir-for-transition.patch
+0002-pam_securetty-Do-not-report-non-fatal-documented-beh.patch
+0003-Support-altfiles-locations.patch
+0004-pam_env-Only-report-non-ENOENT-errors-for-env-file.patch
+0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
+0006-Add-common-pam.d-files.patch

@@ -1,0 +1,39 @@
+Configure miss: xcrypt.h usability
+Configure miss: xcrypt.h presence
+Configure miss: xcrypt.h
+Configure miss: crypt_gensalt_r
+Configure miss: db_create_pam
+Configure miss: db_create
+Configure miss: dbm_store_pam
+Configure miss: dbm_store
+Configure miss: dbm_store in -lndbm
+Configure miss: getfilecon in -lselinux
+Configure miss: inittypes.h usability
+Configure miss: inittypes.h presence
+Configure miss: inittypes.h
+Configure miss: XML catalog (/etc/xml/catalog)
+Configure miss: DocBook XML DTD V4.4 in XML catalog
+Configure miss: DocBook XSL Stylesheets in XML catalog
+Configure miss: w3m
+Configure miss: elinks
+Configure miss: .symver assembler directive
+Configure miss: ld --version-script
+Configure miss: FascistCheck in -lcrack
+Configure miss: xcrypt.h usability
+Configure miss: xcrypt.h presence
+Configure miss: xcrypt.h
+Configure miss: crypt_gensalt_r
+Configure miss: db_create_pam
+Configure miss: db_create
+Configure miss: dbm_store_pam
+Configure miss: dbm_store
+Configure miss: dbm_store in -lndbm
+Configure miss: getfilecon in -lselinux
+Configure miss: inittypes.h usability
+Configure miss: inittypes.h presence
+Configure miss: inittypes.h
+Configure miss: XML catalog (/etc/xml/catalog)
+Configure miss: DocBook XML DTD V4.4 in XML catalog
+Configure miss: DocBook XSL Stylesheets in XML catalog
+Configure miss: w3m
+Configure miss: elinks

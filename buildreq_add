@@ -1,0 +1,17 @@
+autoconf
+automake
+automake-dev
+gettext
+gettext-dev
+libtool
+libtool-dev
+pkg-config-dev
+bison-dev
+cracklib-dev
+flex-dev
+gcc-dev32
+strace
+gcc-libgcc32
+gcc-libstdc++32
+glibc-dev32
+glibc-libc32
