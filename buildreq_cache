@@ -3,4 +3,5 @@ flex
 libxml2-dev
 libxslt-bin
 pkg-config
+util-linux
 xauth

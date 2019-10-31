@@ -6,7 +6,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.3.1
-Release  : 47
+Release  : 48
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source1 : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz.asc
@@ -43,6 +43,7 @@ BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(libtirpc)
 BuildRequires : pkgconfig(zlib)
 BuildRequires : strace
+BuildRequires : util-linux
 BuildRequires : xauth
 Patch1: 0001-libpam-Keep-existing-pamdir-for-transition.patch
 Patch2: 0002-pam_securetty-Do-not-report-non-fatal-documented-beh.patch
@@ -107,6 +108,14 @@ Requires: Linux-PAM-man = %{version}-%{release}
 doc components for the Linux-PAM package.
 
 
+%package extras
+Summary: extras components for the Linux-PAM package.
+Group: Default
+
+%description extras
+extras components for the Linux-PAM package.
+
+
 %package lib
 Summary: lib components for the Linux-PAM package.
 Group: Libraries
@@ -161,6 +170,7 @@ setuid components for the Linux-PAM package.
 
 %prep
 %setup -q -n Linux-PAM-1.3.1
+cd %{_builddir}/Linux-PAM-1.3.1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -176,7 +186,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568869591
+export SOURCE_DATE_EPOCH=1572544411
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -221,12 +231,12 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1568869591
+export SOURCE_DATE_EPOCH=1572544411
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
-cp COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/COPYING
-cp Copyright %{buildroot}/usr/share/package-licenses/Linux-PAM/Copyright
-cp libpamc/License %{buildroot}/usr/share/package-licenses/Linux-PAM/libpamc_License
+cp %{_builddir}/Linux-PAM-1.3.1/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
+cp %{_builddir}/Linux-PAM-1.3.1/Copyright %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
+cp %{_builddir}/Linux-PAM-1.3.1/libpamc/License %{buildroot}/usr/share/package-licenses/Linux-PAM/c6f28267889e6d36329831cfb36f80cdf4612523
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -251,8 +261,6 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
 %files
 %defattr(-,root,root,-)
-/usr/lib32/security/pam_filter/upperLOWER
-/usr/lib64/security/pam_filter/upperLOWER
 
 %files bin
 %defattr(-,root,root,-)
@@ -345,6 +353,11 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 %files doc
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/Linux\-PAM/*
+
+%files extras
+%defattr(-,root,root,-)
+/usr/lib32/security/pam_filter/upperLOWER
+/usr/lib64/security/pam_filter/upperLOWER
 
 %files lib
 %defattr(-,root,root,-)
@@ -445,9 +458,8 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/Linux-PAM/COPYING
-/usr/share/package-licenses/Linux-PAM/Copyright
-/usr/share/package-licenses/Linux-PAM/libpamc_License
+/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
+/usr/share/package-licenses/Linux-PAM/c6f28267889e6d36329831cfb36f80cdf4612523
 
 %files man
 %defattr(0644,root,root,0755)
