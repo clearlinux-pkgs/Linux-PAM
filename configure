@@ -1,5 +1,4 @@
 --includedir=/usr/include/security
---sysconfdir=/usr/share
 --with-db-uniquename=_pam
 --enable-nls
 --disable-nis

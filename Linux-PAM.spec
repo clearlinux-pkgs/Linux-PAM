@@ -6,7 +6,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.3.1
-Release  : 50
+Release  : 52
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source1 : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz.asc
@@ -186,7 +186,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1572549539
+export SOURCE_DATE_EPOCH=1574707512
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -196,7 +196,6 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --includedir=/usr/include/security \
---sysconfdir=/usr/share \
 --with-db-uniquename=_pam \
 --enable-nls \
 --disable-nis \
@@ -212,7 +211,6 @@ export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
 export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %configure --disable-static --includedir=/usr/include/security \
---sysconfdir=/usr/share \
 --with-db-uniquename=_pam \
 --enable-nls \
 --disable-nis \
@@ -231,7 +229,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1572549539
+export SOURCE_DATE_EPOCH=1574707512
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-1.3.1/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
@@ -257,6 +255,17 @@ other; do
 install -m 0644 $FILE %{buildroot}/usr/share/pam.d/
 done
 chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
+mkdir -p %{buildroot}/usr/share/doc/Linux-PAM
+for FILE in \
+modules/pam_limits/limits.conf \
+modules/pam_group/group.conf \
+modules/pam_namespace/namespace.conf \
+modules/pam_namespace/namespace.init \
+modules/pam_access/access.conf \
+modules/pam_env/pam_env.conf \
+modules/pam_time/time.conf; do
+install -m0644 $FILE %{buildroot}/usr/share/doc/Linux-PAM/
+done
 ## install_append end
 
 %files
@@ -278,13 +287,6 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 /usr/share/pam.d/common-session
 /usr/share/pam.d/common-session-noninteractive
 /usr/share/pam.d/other
-/usr/share/security/access.conf
-/usr/share/security/group.conf
-/usr/share/security/limits.conf
-/usr/share/security/namespace.conf
-/usr/share/security/namespace.init
-/usr/share/security/pam_env.conf
-/usr/share/security/time.conf
 
 %files dev
 %defattr(-,root,root,-)
