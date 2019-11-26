@@ -6,7 +6,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.3.1
-Release  : 52
+Release  : 53
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source1 : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz.asc
@@ -51,6 +51,7 @@ Patch3: 0003-Support-altfiles-locations.patch
 Patch4: 0004-pam_env-Only-report-non-ENOENT-errors-for-env-file.patch
 Patch5: 0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
 Patch6: 0006-Add-common-pam.d-files.patch
+Patch7: 0007-Allow-limits.conf-to-be-missing.patch
 
 %description
 Linux-PAM (Pluggable Authentication Modules)
@@ -177,6 +178,7 @@ cd %{_builddir}/Linux-PAM-1.3.1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 pushd ..
 cp -a Linux-PAM-1.3.1 build32
 popd
@@ -186,7 +188,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1574707512
+export SOURCE_DATE_EPOCH=1574797652
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -229,7 +231,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1574707512
+export SOURCE_DATE_EPOCH=1574797652
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-1.3.1/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
