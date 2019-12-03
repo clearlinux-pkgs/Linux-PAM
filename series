@@ -4,4 +4,4 @@
 0004-pam_env-Only-report-non-ENOENT-errors-for-env-file.patch
 0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
 0006-Add-common-pam.d-files.patch
-0007-Allow-limits.conf-to-be-missing.patch
+0007-Stateless-Allow-limits.conf-and-others-to-be-missing.patch
