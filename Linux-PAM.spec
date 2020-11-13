@@ -6,10 +6,10 @@
 #
 Name     : Linux-PAM
 Version  : 1.3.1
-Release  : 54
+Release  : 55
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz
-Source1 : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz.asc
+Source1  : https://github.com/linux-pam/linux-pam/releases/download/v1.3.1/Linux-PAM-1.3.1.tar.xz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -188,14 +188,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575399010
+export SOURCE_DATE_EPOCH=1605307752
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --includedir=/usr/include/security \
 --with-db-uniquename=_pam \
@@ -226,12 +226,12 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
+make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1575399010
+export SOURCE_DATE_EPOCH=1605307752
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-1.3.1/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7
@@ -249,14 +249,20 @@ popd
 %make_install
 %find_lang Linux-PAM
 ## install_append content
+#cleanup
 rm -f %{buildroot}/usr/share/environment
+
 install -d %{buildroot}/usr/share/pam.d/
 for FILE in common-account common-auth common-password \
 common-session common-session-noninteractive \
 other; do
 install -m 0644 $FILE %{buildroot}/usr/share/pam.d/
 done
+
+# The lsb requires unix_chkpwd has setuid permission
 chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
+
+# install example config files
 mkdir -p %{buildroot}/usr/share/doc/Linux-PAM
 for FILE in \
 modules/pam_limits/limits.conf \
