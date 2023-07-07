@@ -1,62 +1,27 @@
-From f01f12e8e97a87a2849bd6b513e29738631b0ba9 Mon Sep 17 00:00:00 2001
-From: Auke Kok <auke-jan.h.kok@intel.com>
-Date: Tue, 26 Nov 2019 11:08:34 -0800
+From 72e127b9b2a6376178d1cfde04b37473a39d467a Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Fri, 7 Jul 2023 09:09:28 -0700
 Subject: [PATCH] Stateless: Allow limits.conf and others to be missing.
 
 Squelch warning/error messages about missing files.
----
- modules/pam_env/pam_env.c       | 4 +---
- modules/pam_limits/pam_limits.c | 8 +++++---
- modules/pam_time/pam_time.c     | 1 -
- 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/modules/pam_env/pam_env.c b/modules/pam_env/pam_env.c
-index 3846e35..99009db 100644
---- a/modules/pam_env/pam_env.c
-+++ b/modules/pam_env/pam_env.c
-@@ -152,10 +152,8 @@ _parse_config_file(pam_handle_t *pamh, int ctrl, const char *file)
-      * any variables found.
-      */
- 
--    if ((conf = fopen(file,"r")) == NULL) {
--      pam_syslog(pamh, LOG_ERR, "Unable to open config file: %s: %m", file);
-+    if ((conf = fopen(file,"r")) == NULL)
-       return PAM_IGNORE;
--    }
- 
-     /* _pam_assemble_line will provide a complete line from the config file,
-      * with all comments removed and any escaped newlines fixed up
-diff --git a/modules/pam_limits/pam_limits.c b/modules/pam_limits/pam_limits.c
-index 4bc4ae7..d27d4ac 100644
---- a/modules/pam_limits/pam_limits.c
-+++ b/modules/pam_limits/pam_limits.c
-@@ -750,9 +750,11 @@ parse_config_file(pam_handle_t *pamh, const char *uname, uid_t uid, gid_t gid,
-         pam_syslog(pamh, LOG_DEBUG, "reading settings from '%s'", CONF_FILE);
-     fil = fopen(CONF_FILE, "r");
-     if (fil == NULL) {
--        pam_syslog (pamh, LOG_WARNING,
--		    "cannot read settings from %s: %m", CONF_FILE);
--        return PAM_SERVICE_ERR;
-+        if (ctrl & PAM_DEBUG_ARG) {
-+            pam_syslog (pamh, LOG_DEBUG,
-+                    "cannot read settings from %s: %m", CONF_FILE);
-+        }
-+        return PAM_SUCCESS;
-     }
- 
-     /* start the show */
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ modules/pam_time/pam_time.c | 1 -
+ 1 file changed, 1 deletion(-)
+
 diff --git a/modules/pam_time/pam_time.c b/modules/pam_time/pam_time.c
-index 26a374b..0d050fa 100644
+index 6b7adef..9eb2a58 100644
 --- a/modules/pam_time/pam_time.c
 +++ b/modules/pam_time/pam_time.c
-@@ -129,7 +129,6 @@ read_field(const pam_handle_t *pamh, int fd, char **buf, int *from, int *state)
+@@ -150,7 +150,6 @@ read_field(const pam_handle_t *pamh, int fd, char **buf, int *from, int *state,
          *state = STATE_NL;
- 	fd = open(PAM_TIME_CONF, O_RDONLY);
+ 	fd = open(file, O_RDONLY);
  	if (fd < 0) {
--	    pam_syslog(pamh, LOG_ERR, "error opening %s: %m", PAM_TIME_CONF);
+-	    pam_syslog(pamh, LOG_ERR, "error opening %s: %m", file);
  	    _pam_drop(*buf);
  	    *state = STATE_EOF;
  	    return -1;
 -- 
-2.24.0
+2.41.0
 

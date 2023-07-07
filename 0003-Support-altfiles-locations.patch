@@ -1,7 +1,7 @@
 From aadb10701e5903dc0f81b718eebf93e79ffdb918 Mon Sep 17 00:00:00 2001
 From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
 Date: Mon, 2 Mar 2015 12:34:42 +0000
-Subject: [PATCH 2/4] Support altfiles locations.
+Subject: [PATCH] Support altfiles locations.
 
 ---
  modules/pam_unix/passverify.c |  4 +++-

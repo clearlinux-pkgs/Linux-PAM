@@ -34,6 +34,7 @@ libpam.so.0:pam_get_user
 libpam.so.0:pam_getenv
 libpam.so.0:pam_getenvlist
 libpam.so.0:pam_modutil_audit_write
+libpam.so.0:pam_modutil_check_user_in_passwd
 libpam.so.0:pam_modutil_cleanup
 libpam.so.0:pam_modutil_drop_priv
 libpam.so.0:pam_modutil_getgrgid
@@ -45,6 +46,7 @@ libpam.so.0:pam_modutil_getspnam
 libpam.so.0:pam_modutil_read
 libpam.so.0:pam_modutil_regain_priv
 libpam.so.0:pam_modutil_sanitize_helper_fds
+libpam.so.0:pam_modutil_search_key
 libpam.so.0:pam_modutil_user_in_group_nam_gid
 libpam.so.0:pam_modutil_user_in_group_nam_nam
 libpam.so.0:pam_modutil_user_in_group_uid_gid
@@ -57,6 +59,7 @@ libpam.so.0:pam_set_data
 libpam.so.0:pam_set_item
 libpam.so.0:pam_setcred
 libpam.so.0:pam_start
+libpam.so.0:pam_start_confdir
 libpam.so.0:pam_strerror
 libpam.so.0:pam_syslog
 libpam.so.0:pam_vprompt

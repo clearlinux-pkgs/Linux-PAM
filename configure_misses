@@ -1,39 +1,44 @@
-Configure miss: xcrypt.h usability
-Configure miss: xcrypt.h presence
-Configure miss: xcrypt.h
-Configure miss: crypt_gensalt_r
-Configure miss: db_create_pam
-Configure miss: db_create
-Configure miss: dbm_store_pam
-Configure miss: dbm_store
-Configure miss: dbm_store in -lndbm
-Configure miss: getfilecon in -lselinux
-Configure miss: inittypes.h usability
-Configure miss: inittypes.h presence
-Configure miss: inittypes.h
-Configure miss: XML catalog (/etc/xml/catalog)
-Configure miss: DocBook XML DTD V4.4 in XML catalog
-Configure miss: DocBook XSL Stylesheets in XML catalog
-Configure miss: w3m
-Configure miss: elinks
 Configure miss: .symver assembler directive
-Configure miss: ld --version-script
-Configure miss: FascistCheck in -lcrack
-Configure miss: xcrypt.h usability
-Configure miss: xcrypt.h presence
-Configure miss: xcrypt.h
-Configure miss: crypt_gensalt_r
-Configure miss: db_create_pam
+Configure miss: DocBook XML RNG V5.0 in XML catalog
+Configure miss: DocBook XML RNG V5.0 in XML catalog
+Configure miss: DocBook XSL Stylesheets in XML catalog
+Configure miss: DocBook XSL Stylesheets in XML catalog
+Configure miss: XML catalog (/etc/xml/catalog)
+Configure miss: XML catalog (/etc/xml/catalog)
 Configure miss: db_create
-Configure miss: dbm_store_pam
+Configure miss: db_create
+Configure miss: db_create_pam
+Configure miss: db_create_pam
+Configure miss: dbm_store
 Configure miss: dbm_store
 Configure miss: dbm_store in -lndbm
-Configure miss: getfilecon in -lselinux
-Configure miss: inittypes.h usability
-Configure miss: inittypes.h presence
-Configure miss: inittypes.h
-Configure miss: XML catalog (/etc/xml/catalog)
-Configure miss: DocBook XML DTD V4.4 in XML catalog
-Configure miss: DocBook XSL Stylesheets in XML catalog
-Configure miss: w3m
+Configure miss: dbm_store in -lndbm
+Configure miss: dbm_store_pam
+Configure miss: dbm_store_pam
 Configure miss: elinks
+Configure miss: elinks
+Configure miss: getfilecon in -lselinux
+Configure miss: getfilecon in -lselinux
+Configure miss: i686-generic-linux-gnu-file
+Configure miss: inittypes.h
+Configure miss: inittypes.h
+Configure miss: inittypes.h presence
+Configure miss: inittypes.h presence
+Configure miss: inittypes.h usability
+Configure miss: inittypes.h usability
+Configure miss: ld --version-script
+Configure miss: libcrypt
+Configure miss: libcrypt
+Configure miss: library containing crypt_gensalt_rn
+Configure miss: library containing crypt_gensalt_rn
+Configure miss: libsystemd >= 254
+Configure miss: libsystemd >= 254
+Configure miss: memset_explicit
+Configure miss: memset_explicit
+Configure miss: w3m
+Configure miss: w3m
+Configure miss: whether gcc handles -Werror -Wunknown-warning-option
+Configure miss: whether gcc handles -Werror -Wunknown-warning-option
+Configure miss: whether gcc handles -Wp64
+Configure miss: whether gcc handles -Wp64
+Configure miss: x86_64-generic-linux-gnu-file

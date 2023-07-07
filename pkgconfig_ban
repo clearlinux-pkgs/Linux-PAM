@@ -1,3 +1,6 @@
 # This file contains pkgconfig build requirements that get picked up
 # but are undesirable. One entry per line, no whitespace.
 32libtirpc
+32libcrypt
+32libeconf
+libcrypt
