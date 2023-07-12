@@ -7,7 +7,6 @@ libtool
 libtool-dev
 pkg-config-dev
 bison-dev
-cracklib-dev
 flex-dev
 gcc-dev32
 strace

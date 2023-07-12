@@ -1,16 +1,16 @@
-From c75cd096b9141ead76be147ef4aea208258f06b6 Mon Sep 17 00:00:00 2001
+From 40d157037444c80fe6faa34738827c5b083435c2 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 17 Jul 2019 14:13:08 -0700
 Subject: [PATCH] Add common pam.d files.
 
 ---
- common-account                | 25 +++++++++++++++++++++++
- common-auth                   | 18 +++++++++++++++++
- common-password               | 38 +++++++++++++++++++++++++++++++++++
- common-session                | 21 +++++++++++++++++++
+ common-account                | 25 ++++++++++++++++++++++++
+ common-auth                   | 18 ++++++++++++++++++
+ common-password               | 36 +++++++++++++++++++++++++++++++++++
+ common-session                | 21 ++++++++++++++++++++
  common-session-noninteractive | 19 ++++++++++++++++++
- other                         | 24 ++++++++++++++++++++++
- 6 files changed, 145 insertions(+)
+ other                         | 24 +++++++++++++++++++++++
+ 6 files changed, 143 insertions(+)
  create mode 100644 common-account
  create mode 100644 common-auth
  create mode 100644 common-password
@@ -75,10 +75,10 @@ index 0000000..460b69f
 +# and here are more per-package modules (the "Additional" block)
 diff --git a/common-password b/common-password
 new file mode 100644
-index 0000000..6516430
+index 0000000..d70e3c9
 --- /dev/null
 +++ b/common-password
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,36 @@
 +#
 +# /etc/pam.d/common-password - password-related modules common to all services
 +#
@@ -91,23 +91,21 @@ index 0000000..6516430
 +# The "sha512" option enables salted SHA512 passwords.  Without this option,
 +# the default is Unix crypt.  Prior releases used the option "md5".
 +#
-+# The "use_authtok" option tells pam_unix to omit any password checks that
-+# cracklib already does and accepts the input from cracklib.
++# The "use_authtok" when password changing enforce the module to set the new
++# password to the one provided by a previously stacked pam_passwdqc module.
 +#
 +# See the pam_unix manpage for other options.
 +
-+# Explanation of pam_cracklib options:
++# Explanation of pam_passwdqc options:
 +#
-+# pam_cracklib by default includes various password checks against the
-+# dictionary but also against weird password changes, like palindromes.
++# pam_passwdqc by default includes various password checks.
 +#
 +# "retry=3" allows 3 passes at changing the password, after which the
 +# PAM conversation needs to be restarted from the start.
++# "enforce=users" for "chpasswd" and "passwd" PAM services "users" will
++# enforce strong passwords for invocations by non-root users only.
 +#
-+# "difok=3" allows password changes when at least 3 characters are different
-+# from the previous password.
-+#
-+password	required			pam_cracklib.so retry=3 difok=3
++password	required			pam_passwdqc.so retry=3 enforce=users
 +# here are the per-package modules (the "Primary" block)
 +password	[success=1 default=ignore]	pam_unix.so sha512 use_authtok
 +# here's the fallback if no module succeeds
@@ -200,5 +198,5 @@ index 0000000..ec970ec
 +session    required     pam_warn.so
 +session    required     pam_deny.so
 -- 
-2.22.0
+2.41.0
 
