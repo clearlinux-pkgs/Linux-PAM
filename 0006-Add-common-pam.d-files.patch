@@ -1,16 +1,16 @@
-From 40d157037444c80fe6faa34738827c5b083435c2 Mon Sep 17 00:00:00 2001
+From 6fb8bcd5c5ec19dac2b0302454a552e165c65130 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 17 Jul 2019 14:13:08 -0700
 Subject: [PATCH] Add common pam.d files.
 
 ---
- common-account                | 25 ++++++++++++++++++++++++
+ common-account                | 25 +++++++++++++++++++++++++
  common-auth                   | 18 ++++++++++++++++++
- common-password               | 36 +++++++++++++++++++++++++++++++++++
- common-session                | 21 ++++++++++++++++++++
- common-session-noninteractive | 19 ++++++++++++++++++
- other                         | 24 +++++++++++++++++++++++
- 6 files changed, 143 insertions(+)
+ common-password               | 17 +++++++++++++++++
+ common-session                | 21 +++++++++++++++++++++
+ common-session-noninteractive | 19 +++++++++++++++++++
+ other                         | 24 ++++++++++++++++++++++++
+ 6 files changed, 124 insertions(+)
  create mode 100644 common-account
  create mode 100644 common-auth
  create mode 100644 common-password
@@ -75,10 +75,10 @@ index 0000000..460b69f
 +# and here are more per-package modules (the "Additional" block)
 diff --git a/common-password b/common-password
 new file mode 100644
-index 0000000..d70e3c9
+index 0000000..1720c04
 --- /dev/null
 +++ b/common-password
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,17 @@
 +#
 +# /etc/pam.d/common-password - password-related modules common to all services
 +#
@@ -86,28 +86,9 @@ index 0000000..d70e3c9
 +# and should contain a list of modules that define the services to be
 +# used to change user passwords.  The default is pam_unix.
 +
-+# Explanation of pam_unix options:
-+#
-+# The "sha512" option enables salted SHA512 passwords.  Without this option,
-+# the default is Unix crypt.  Prior releases used the option "md5".
-+#
-+# The "use_authtok" when password changing enforce the module to set the new
-+# password to the one provided by a previously stacked pam_passwdqc module.
-+#
-+# See the pam_unix manpage for other options.
++# See the pam_unix manpage for options.
 +
-+# Explanation of pam_passwdqc options:
-+#
-+# pam_passwdqc by default includes various password checks.
-+#
-+# "retry=3" allows 3 passes at changing the password, after which the
-+# PAM conversation needs to be restarted from the start.
-+# "enforce=users" for "chpasswd" and "passwd" PAM services "users" will
-+# enforce strong passwords for invocations by non-root users only.
-+#
-+password	required			pam_passwdqc.so retry=3 enforce=users
-+# here are the per-package modules (the "Primary" block)
-+password	[success=1 default=ignore]	pam_unix.so sha512 use_authtok
++password	[success=1 default=ignore]	pam_unix.so sha512 shadow nullok
 +# here's the fallback if no module succeeds
 +password	requisite			pam_deny.so
 +# prime the stack with a positive return value if there isn't one already;

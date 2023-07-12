@@ -7,7 +7,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.5.3
-Release  : 58
+Release  : 59
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source1  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz.asc
@@ -196,7 +196,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1689178998
+export SOURCE_DATE_EPOCH=1689185154
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -239,7 +239,7 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1689178998
+export SOURCE_DATE_EPOCH=1689185154
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-%{version}/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7 || :
