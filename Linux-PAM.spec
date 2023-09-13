@@ -7,7 +7,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.5.3
-Release  : 59
+Release  : 62
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source1  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz.asc
@@ -57,10 +57,8 @@ BuildRequires : xauth
 %define debug_package %{nil}
 Patch1: 0001-stateless-move-config-dist-dir.patch
 Patch2: 0003-Support-altfiles-locations.patch
-Patch3: 0004-pam_env-Only-report-non-ENOENT-errors-for-env-file.patch
-Patch4: 0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
-Patch5: 0006-Add-common-pam.d-files.patch
-Patch6: 0007-Stateless-Allow-limits.conf-and-others-to-be-missing.patch
+Patch3: 0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
+Patch4: 0006-Add-common-pam.d-files.patch
 
 %description
 Linux-PAM (Pluggable Authentication Modules)
@@ -185,8 +183,6 @@ cd %{_builddir}/Linux-PAM-1.5.3
 %patch -P 2 -p1
 %patch -P 3 -p1
 %patch -P 4 -p1
-%patch -P 5 -p1
-%patch -P 6 -p1
 pushd ..
 cp -a Linux-PAM-1.5.3 build32
 popd
@@ -196,7 +192,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1689185154
+export SOURCE_DATE_EPOCH=1694624132
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -211,7 +207,9 @@ export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonl
 --disable-nis \
 --disable-regenerate-docu \
 --disable-prelude \
---disable-audit --libdir=/usr/lib64
+--disable-audit \
+--enable-vendordir=/usr/share/defaults/etc \
+--enable-sconfigdir=/usr/share/defaults/etc/security --libdir=/usr/lib64
 make  %{?_smp_mflags}
 
 pushd ../build32/
@@ -226,7 +224,9 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 --disable-nis \
 --disable-regenerate-docu \
 --disable-prelude \
---disable-audit   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+--disable-audit \
+--enable-vendordir=/usr/share/defaults/etc \
+--enable-sconfigdir=/usr/share/defaults/etc/security   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %check
@@ -239,7 +239,7 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1689185154
+export SOURCE_DATE_EPOCH=1694624132
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-%{version}/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7 || :
@@ -275,19 +275,6 @@ done
 
 # The lsb requires unix_chkpwd has setuid permission
 chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
-
-# install example config files
-mkdir -p %{buildroot}/usr/share/doc/Linux-PAM
-for FILE in \
-modules/pam_limits/limits.conf \
-modules/pam_group/group.conf \
-modules/pam_namespace/namespace.conf \
-modules/pam_namespace/namespace.init \
-modules/pam_access/access.conf \
-modules/pam_env/pam_env.conf \
-modules/pam_time/time.conf; do
-install -m0644 $FILE %{buildroot}/usr/share/doc/Linux-PAM/
-done
 ## install_append end
 
 %files
@@ -304,6 +291,15 @@ done
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/defaults/etc/security/access.conf
+/usr/share/defaults/etc/security/faillock.conf
+/usr/share/defaults/etc/security/group.conf
+/usr/share/defaults/etc/security/limits.conf
+/usr/share/defaults/etc/security/namespace.conf
+/usr/share/defaults/etc/security/namespace.init
+/usr/share/defaults/etc/security/pam_env.conf
+/usr/share/defaults/etc/security/pwhistory.conf
+/usr/share/defaults/etc/security/time.conf
 /usr/share/pam.d/common-account
 /usr/share/pam.d/common-auth
 /usr/share/pam.d/common-password

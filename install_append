@@ -10,16 +10,3 @@ done
 
 # The lsb requires unix_chkpwd has setuid permission
 chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
-
-# install example config files
-mkdir -p %{buildroot}/usr/share/doc/Linux-PAM
-for FILE in \
-	modules/pam_limits/limits.conf \
-	modules/pam_group/group.conf \
-	modules/pam_namespace/namespace.conf \
-	modules/pam_namespace/namespace.init \
-	modules/pam_access/access.conf \
-	modules/pam_env/pam_env.conf \
-	modules/pam_time/time.conf; do
-	install -m0644 $FILE %{buildroot}/usr/share/doc/Linux-PAM/
-done

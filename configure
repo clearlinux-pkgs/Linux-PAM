@@ -5,3 +5,5 @@
 --disable-regenerate-docu
 --disable-prelude
 --disable-audit
+--enable-vendordir=/usr/share/defaults/etc
+--enable-sconfigdir=/usr/share/defaults/etc/security
