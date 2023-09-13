@@ -7,7 +7,7 @@
 #
 Name     : Linux-PAM
 Version  : 1.5.3
-Release  : 62
+Release  : 63
 URL      : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source0  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz
 Source1  : https://github.com/linux-pam/linux-pam/releases/download/v1.5.3/Linux-PAM-1.5.3.tar.xz.asc
@@ -192,7 +192,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1694624132
+export SOURCE_DATE_EPOCH=1694625943
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -239,7 +239,7 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1694624132
+export SOURCE_DATE_EPOCH=1694625943
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Linux-PAM
 cp %{_builddir}/Linux-PAM-%{version}/COPYING %{buildroot}/usr/share/package-licenses/Linux-PAM/5fb122a984b09d5c687513bb34a51eeeff2b13a7 || :
@@ -263,9 +263,7 @@ popd
 %make_install
 %find_lang Linux-PAM
 ## install_append content
-#cleanup
-rm -f %{buildroot}/usr/share/environment
-
+touch %{buildroot}/usr/share/defaults/etc/environment
 install -d %{buildroot}/usr/share/pam.d/
 for FILE in common-account common-auth common-password \
 common-session common-session-noninteractive \
@@ -291,6 +289,7 @@ chmod 4755 %{buildroot}/usr/bin/unix_chkpwd
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/defaults/etc/environment
 /usr/share/defaults/etc/security/access.conf
 /usr/share/defaults/etc/security/faillock.conf
 /usr/share/defaults/etc/security/group.conf

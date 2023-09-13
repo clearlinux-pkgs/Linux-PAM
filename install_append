@@ -1,6 +1,4 @@
-#cleanup
-rm -f %{buildroot}/usr/share/environment
-
+touch %{buildroot}/usr/share/defaults/etc/environment
 install -d %{buildroot}/usr/share/pam.d/
 for FILE in common-account common-auth common-password \
 	    common-session common-session-noninteractive \
