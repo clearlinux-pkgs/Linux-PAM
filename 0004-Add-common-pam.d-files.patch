@@ -1,7 +1,7 @@
-From 6fb8bcd5c5ec19dac2b0302454a552e165c65130 Mon Sep 17 00:00:00 2001
+From 5ca1c70f59331845a36b942b49d20a1b049ccb39 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Wed, 17 Jul 2019 14:13:08 -0700
-Subject: [PATCH] Add common pam.d files.
+Subject: [PATCH 4/4] Add common pam.d files.
 
 ---
  common-account                | 25 +++++++++++++++++++++++++
@@ -125,7 +125,7 @@ index 0000000..09d4a1a
 +session	optional			pam_systemd.so
 diff --git a/common-session-noninteractive b/common-session-noninteractive
 new file mode 100644
-index 0000000..b110bb2
+index 0000000..a9c830d
 --- /dev/null
 +++ b/common-session-noninteractive
 @@ -0,0 +1,19 @@
@@ -147,10 +147,10 @@ index 0000000..b110bb2
 +# since the modules above will each just jump around
 +session	required			pam_permit.so
 +# and here are more per-package modules (the "Additional" block)
-+session	required	pam_unix.so 
++session	required	pam_unix.so
 diff --git a/other b/other
 new file mode 100644
-index 0000000..ec970ec
+index 0000000..010d5d1
 --- /dev/null
 +++ b/other
 @@ -0,0 +1,24 @@
@@ -160,12 +160,12 @@ index 0000000..ec970ec
 +# Note that this file is used for any unspecified service; for example
 +#if /etc/pam.d/cron  specifies no session modules but cron calls
 +#pam_open_session, the session module out of /etc/pam.d/other is
-+#used.  
++#used.
 +
 +# We use pam_warn.so to generate syslog notes that the 'other'
 +#fallback rules are being used (as a hint to suggest you should setup
 +#specific PAM rules for the service and aid to debugging). Then to be
-+#secure, deny access to all services by default. 
++#secure, deny access to all services by default.
 +
 +auth       required     pam_warn.so
 +auth       required     pam_deny.so
@@ -179,5 +179,5 @@ index 0000000..ec970ec
 +session    required     pam_warn.so
 +session    required     pam_deny.so
 -- 
-2.41.0
+2.43.0
 

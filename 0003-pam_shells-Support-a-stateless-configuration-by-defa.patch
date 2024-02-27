@@ -1,19 +1,18 @@
-From b6b728ab303f2ac96e8579c30f56f1479280b994 Mon Sep 17 00:00:00 2001
+From 6b2b45c1f4d2c8d0d973b50ab3f764b991e1febc Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Thu, 6 Jul 2023 10:58:31 -0700
-Subject: [PATCH] pam_shells: Support a stateless configuration by default
+Date: Tue, 27 Feb 2024 14:40:09 -0800
+Subject: [PATCH 3/4] pam_shells: Support a stateless configuration by default
 
-Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
 Signed-off-by: William Douglas <william.douglas@intel.com>
 ---
  modules/pam_shells/pam_shells.c | 17 +++++++++++++----
  1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/modules/pam_shells/pam_shells.c b/modules/pam_shells/pam_shells.c
-index abebdd0..2f96c1c 100644
+index d5f8ec3..d5dca13 100644
 --- a/modules/pam_shells/pam_shells.c
 +++ b/modules/pam_shells/pam_shells.c
-@@ -26,6 +26,7 @@
+@@ -27,6 +27,7 @@
  #include <security/pam_ext.h>
  
  #define SHELL_FILE "/etc/shells"
@@ -21,7 +20,7 @@ index abebdd0..2f96c1c 100644
  #define SHELLS "shells"
  #define ETCDIR "/etc"
  #define DEFAULT_SHELL "/bin/sh"
-@@ -54,6 +55,7 @@ static int perform_check(pam_handle_t *pamh)
+@@ -55,6 +56,7 @@ static int perform_check(pam_handle_t *pamh)
      const char *userName;
      const char *userShell;
      struct passwd * pw;
@@ -29,9 +28,9 @@ index abebdd0..2f96c1c 100644
  
      retval = pam_get_user(pamh, &userName, NULL);
      if (retval != PAM_SUCCESS) {
-@@ -109,12 +111,19 @@ static int perform_check(pam_handle_t *pamh)
-     char shellFileLine[256];
-     FILE * shellFile;
+@@ -120,12 +122,19 @@ static int perform_check(pam_handle_t *pamh)
+     char *p = NULL;
+     size_t n = 0;
  
 -    if (!check_file(SHELL_FILE, pamh))
 -        return PAM_AUTH_ERR;
@@ -54,5 +53,5 @@ index abebdd0..2f96c1c 100644
      }
  
 -- 
-2.41.0
+2.43.0
 

@@ -17,22 +17,16 @@ Configure miss: dbm_store_pam
 Configure miss: dbm_store_pam
 Configure miss: elinks
 Configure miss: elinks
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: getfilecon in -lselinux
 Configure miss: getfilecon in -lselinux
 Configure miss: i686-generic-linux-gnu-file
 Configure miss: inittypes.h
 Configure miss: inittypes.h
-Configure miss: inittypes.h presence
-Configure miss: inittypes.h presence
-Configure miss: inittypes.h usability
-Configure miss: inittypes.h usability
 Configure miss: ld --version-script
-Configure miss: libcrypt
-Configure miss: libcrypt
-Configure miss: library containing crypt_gensalt_rn
-Configure miss: library containing crypt_gensalt_rn
-Configure miss: libsystemd >= 254
-Configure miss: libsystemd >= 254
+Configure miss: library containing yywrap
+Configure miss: library containing yywrap
 Configure miss: memset_explicit
 Configure miss: memset_explicit
 Configure miss: w3m

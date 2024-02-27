@@ -1,17 +1,17 @@
-From b8df38d55a2b811a52d4c6edcd025b2da8f10d9b Mon Sep 17 00:00:00 2001
+From 5d11a80b0477af8851c16eb25425c05c0d60ff0f Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Thu, 29 Jun 2023 15:15:24 -0700
-Subject: [PATCH 1/6] stateless move config dist dir
+Subject: [PATCH 1/4] stateless move config dist dir
 
 ---
  libpam/pam_private.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/libpam/pam_private.h b/libpam/pam_private.h
-index 508527c..9bddce7 100644
+index f9dd622..35c03fc 100644
 --- a/libpam/pam_private.h
 +++ b/libpam/pam_private.h
-@@ -27,8 +27,8 @@
+@@ -28,8 +28,8 @@
  #define PAM_CONFIG         "/etc/pam.conf"
  #define PAM_CONFIG_D       "/etc/pam.d"
  #define PAM_CONFIG_DF      "/etc/pam.d/%s"
@@ -23,5 +23,5 @@ index 508527c..9bddce7 100644
  #define PAM_CONFIG_DIST2_D  VENDORDIR"/pam.d"
  #define PAM_CONFIG_DIST2_DF VENDORDIR"/pam.d/%s"
 -- 
-2.41.0
+2.43.0
 

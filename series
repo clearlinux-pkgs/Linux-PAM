@@ -1,4 +1,4 @@
 0001-stateless-move-config-dist-dir.patch
-0003-Support-altfiles-locations.patch
-0005-pam_shells-Support-a-stateless-configuration-by-defa.patch
-0006-Add-common-pam.d-files.patch
+0002-Support-altfile-locations.patch
+0003-pam_shells-Support-a-stateless-configuration-by-defa.patch
+0004-Add-common-pam.d-files.patch

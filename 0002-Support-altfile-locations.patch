@@ -1,0 +1,99 @@
+From 022566c82bdac301ecb338530f753359421ef967 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 27 Feb 2024 14:38:58 -0800
+Subject: [PATCH 2/4] Support altfile locations
+
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ modules/pam_unix/passverify.c |  4 +++-
+ modules/pam_unix/support.c    | 44 +++++++++++++++++++----------------
+ 2 files changed, 27 insertions(+), 21 deletions(-)
+
+diff --git a/modules/pam_unix/passverify.c b/modules/pam_unix/passverify.c
+index 5c4f862..fa166f7 100644
+--- a/modules/pam_unix/passverify.c
++++ b/modules/pam_unix/passverify.c
+@@ -957,6 +957,7 @@ PAMH_ARG_DECL(int unix_update_shadow,
+     struct spwd spwdent, *stmpent = NULL;
+     struct stat st;
+     FILE *pwfile, *opwfile;
++    int opwfd = -1;
+     int err = 0;
+     mode_t oldmask;
+     int wroteentry = 0;
+@@ -991,7 +992,8 @@ PAMH_ARG_DECL(int unix_update_shadow,
+ 	goto done;
+     }
+ 
+-    opwfile = fopen("/etc/shadow", "re");
++    opwfd = open("/etc/shadow", O_RDONLY|O_CREAT|O_CLOEXEC, 0);
++    opwfile = fdopen(opwfd, "r");
+     if (opwfile == NULL) {
+ 	fclose(pwfile);
+ 	err = 1;
+diff --git a/modules/pam_unix/support.c b/modules/pam_unix/support.c
+index d391973..b53df65 100644
+--- a/modules/pam_unix/support.c
++++ b/modules/pam_unix/support.c
+@@ -348,34 +348,38 @@ int _unix_getpwnam(pam_handle_t *pamh, const char *name,
+ {
+ 	char *buf = NULL;
+ 	int matched = 0;
++	char *passwd_files[] = {"/etc/passwd", "/usr/share/defaults/etc/passwd", NULL};
++	char **i = NULL;
+ 
+-	if (!matched && files && strchr(name, ':') == NULL) {
+-		FILE *passwd;
++	for (i = passwd_files; i && *i; i++) {
++		if (!matched && files && strchr(name, ':') == NULL) {
++			FILE *passwd;
+ 
+-		passwd = fopen("/etc/passwd", "re");
+-		if (passwd != NULL) {
+-			size_t n = 0, userlen;
+-			ssize_t r;
++			passwd = fopen(*i, "r");
++			if (passwd != NULL) {
++				size_t n = 0, userlen;
++				ssize_t r;
+ 
+-			userlen = strlen(name);
++				userlen = strlen(name);
+ 
+-			while ((r = getline(&buf, &n, passwd)) != -1) {
+-				if ((size_t)r > userlen && (buf[userlen] == ':') &&
+-				    (strncmp(name, buf, userlen) == 0)) {
+-					char *p;
++				while ((r = getline(&buf, &n, passwd)) != -1) {
++					if ((size_t)r > userlen && (buf[userlen] == ':') &&
++						(strncmp(name, buf, userlen) == 0)) {
++						char *p;
+ 
+-					p = buf + strlen(buf) - 1;
+-					while (isspace((unsigned char)*p) && (p >= buf)) {
+-						*p-- = '\0';
++						p = buf + strlen(buf) - 1;
++						while (isspace((unsigned char)*p) && (p >= buf)) {
++							*p-- = '\0';
++						}
++						matched = 1;
++						break;
+ 					}
+-					matched = 1;
+-					break;
+ 				}
++				if (!matched) {
++					_pam_drop(buf);
++				}
++				fclose(passwd);
+ 			}
+-			if (!matched) {
+-				_pam_drop(buf);
+-			}
+-			fclose(passwd);
+ 		}
+ 	}
+ 
+-- 
+2.43.0
+
