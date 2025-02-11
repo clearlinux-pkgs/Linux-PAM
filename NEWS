@@ -1,5 +1,25 @@
 Linux-PAM NEWS -- history of user-visible changes.
 
+Release 1.7.0
+* build: changed build system from autotools to meson.
+* libpam_misc: use ECHOCTL in the terminal input
+* pam_access: support UID and GID in access.conf
+* pam_env: install environment file in vendordir if vendordir is enabled
+* pam_issue: only count class user if logind support is enabled
+* pam_limits: use systemd-logind instead of utmp if logind support is enabled
+* pam_unix: compare password hashes in constant time
+* Multiple minor bug fixes, build fixes, portability fixes,
+  documentation improvements, and translation updates.
+
+Release 1.6.1
+* build: fail if specified configure options cannot be satisfied.
+* pam_env: fixed --disable-econf --enable-vendordir support.
+* pam_unix: do not warn if password aging is disabled.
+* pam_unix: try to set uid to 0 before unix_chkpwd invocation.
+* pam_unix: allow empty passwords with non-empty hashes.
+* Multiple minor bug fixes, build fixes, portability fixes,
+  documentation improvements, and translation updates.
+
 Release 1.6.0
 * Added support of configuration files with arbitrarily long lines.
 * build: fixed build outside of the source tree.

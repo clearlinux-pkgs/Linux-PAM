@@ -1,9 +1,7 @@
---includedir=/usr/include/security
---with-db-uniquename=_pam
---enable-nls
---disable-nis
---disable-regenerate-docu
---disable-prelude
---disable-audit
---enable-vendordir=/usr/share/defaults/etc
---enable-sconfigdir=/usr/share/defaults/etc/security
+-Ddb-uniquename=_pam
+-Dnis=disabled
+-Daudit=disabled
+-Dvendordir=/usr/share/defaults/etc
+-Dsconfigdir=/usr/share/defaults/etc/security
+-Dselinux=disabled
+-Ddocs=disabled

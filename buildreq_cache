@@ -1,6 +1,5 @@
-1.6.0
-flex
-libxml2-dev
-libxslt-bin
-pkg-config
-xauth
+1.7.0
+pkgconfig(32libsystemd)
+pkgconfig(32systemd)
+pkgconfig(libsystemd)
+pkgconfig(systemd)
